@@ -1,0 +1,30 @@
+2)
+
+I)Disabling interrupts will fully occupy one processor, but the other ones will still be able to do
+  it.
+  
+II)If interrupts are disabled, the program can fully disable the machine, since stopping it would
+   also be an interrupt.
+   
+3)
+
+I)
+Scenario 1:
+	When process 1 is at the end of enter_region, he will have to wait, since he is loser
+	and the other one still is interested. When process 0 then leaves, process 1 can enter.
+Scenario 2:
+	Both values of interested will be set to true, but almost immediately after process 0 
+	declares himself the loser, process 1 will do the same, making him the only loser.
+	Therefore, process 0 can enter the critical region with process 1 waiting. When process
+	0 is finished and sets interested on its index to false, process 1 can do its thing.
+	
+II)
+In the strict alternaton approach, each process will get to enter the critical region exactly once
+before giving priority to the other process. So, when you want to do two things, while the other process
+does not want to do anything, you will still have to wait until the other process does somthing.
+
+IV)
+I would solve the problem by expanding the interested array to 3 slots, and instead of making
+a process the loser assign him a number. When he wamts to enter the critical region the process will 
+wait until everyone who is also interested and has a smaller number than him is finished. The assigned number will 
+of course have to be bigger than everyone else's number at that time.
